@@ -39,5 +39,10 @@ namespace Example
             Console.WriteLine("BONUSES ALL ROUND!!");
             Console.WriteLine("Paying Manager: {0} from special account", m);
         }
+
+        public void Pay(object o)
+        {
+            Console.WriteLine("Unable to pay {0}", o);
+        }
     }
 }
