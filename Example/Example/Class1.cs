@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace Example
 {
@@ -12,14 +13,14 @@ namespace Example
         }
     }
 
-    public class Manager
+    public class Manager : Employee
     {
-        public double Salary { get { return 100000.00; } }
+        protected override double Salary { get { return 100000.00; } }
     }
 
-    public class Assistant
+    public class Assistant : Employee
     {
-        public double Salary { get { return 10000.00; } }
+        protected override double Salary { get { return 10000.00; } }
     }
 
     public class PayRoll
@@ -43,6 +44,14 @@ namespace Example
         public void Pay(object o)
         {
             Console.WriteLine("Unable to pay {0}", o);
+        }
+
+        public Employee GenerateNewEmployee(string className)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            AssemblyName assemblyName = assembly.GetName();
+            Type t = assembly.GetType(String.Format("{0}.{1}", assemblyName.Name, className));
+            return (Employee)Activator.CreateInstance(t);
         }
     }
 }
